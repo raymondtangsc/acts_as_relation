@@ -28,11 +28,12 @@ module ActiveRecord
     end
 
     module ClassMethods
-      def acts_as(model_name, scope=nil, options={})
-        if scope.is_a?(Hash)
-          options = scope
-          scope   = nil
-        end
+      # def acts_as(model_name, scope=nil, options={})
+      def acts_as(model_name, options={})
+        # if scope.is_a?(Hash)
+        #   options = scope
+        #   scope   = nil
+        # end
 
         if options[:conditions]
           ActiveSupport::Deprecation.warn(":conditions is no longer supported by acts_as. Please use `where()` instead. Example: `acts_as :person, -> { where(name: 'John') }`")
@@ -62,7 +63,8 @@ module ActiveRecord
           acts_as_model.module_eval do
             singleton = class << self ; self end
             singleton.send :define_method, :included do |base|
-              base.has_one name.to_sym, scope, has_one_options
+              # base.has_one name.to_sym, scope, has_one_options
+              base.has_one name.to_sym, has_one_options
               base.validate "#{name}_must_be_valid".to_sym
               base.alias_method_chain name.to_sym, :autobuild
 
