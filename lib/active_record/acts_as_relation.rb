@@ -152,6 +152,14 @@ module ActiveRecord
           def acts_as_model_name
             :#{name}
           end
+
+          def acts_as_class_name
+            '#{class_name}'
+          end
+ 
+          def self.reflect_on_association(association)
+            super || '#{class_name}'.constantize.reflect_on_association(association)
+          end
         EndCode
         instance_eval code, __FILE__, __LINE__
       end
