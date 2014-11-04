@@ -152,6 +152,10 @@ module ActiveRecord
           def acts_as_model_name
             :#{name}
           end
+          
+          def acts_as_class_name
+            '#{class_name}'
+          end
         EndCode
         instance_eval code, __FILE__, __LINE__
       end
